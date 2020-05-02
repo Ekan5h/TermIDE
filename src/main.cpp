@@ -6,6 +6,7 @@ using namespace std;
 
 int main(){
     initscr();
+    noecho();
     use_default_colors();
     cbreak();
     keypad(stdscr, TRUE);
@@ -23,6 +24,8 @@ int main(){
     ioFrame * output = new ioFrame((2*COL)/3, ROW/2, ROW-ROW/2, COL-(2*COL)/3, "Stdout");
     toolbar * toolb = new toolbar("Terminal IDE");
     
+    code->focus();
+
     int ch;
     while((ch=getch())!=KEY_F(1)){
         continue;
