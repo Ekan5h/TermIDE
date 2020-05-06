@@ -114,7 +114,13 @@ class ioFrame{
         if(delchar == '\n'){
             cursor -= width-2 + cursor%(width-2);
             while(pointer>=0 && content[--pointer]!='\n');
-            while(++pointer!=temp) cursor++;
+            int prev = pointer;
+            while(++pointer!=temp){
+                if(pointer - prev == width-2){
+                    cursor -= width-2;
+                }
+                cursor++;
+            }
         }else
             cursor--;
         setcursor();
