@@ -147,7 +147,22 @@ class ioFrame{
     }
 
     void curdown(){
-
+        int temp = pointer, pos = cursor%(width-2);
+        while(pointer<content.length() && content[pointer] != '\n' && pointer-temp+pos < width-2) pointer++;
+        if(content[pointer]=='\n' || pointer-temp+pos == width-2){
+            // Next Line available
+            if(content[pointer]=='\n' && pointer-temp+pos != width-2) pointer++;
+            cursor += width-2 - cursor%(width-2);
+            temp = pointer;
+            while(pointer<content.length() && pointer-temp<pos && content[pointer]!='\n'){
+                pointer++;
+                cursor++;
+            }
+            focus();
+        }else{
+            // Next line not available
+            pointer = temp;
+        }
     }
 
     void curup(){
