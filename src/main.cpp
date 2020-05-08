@@ -26,7 +26,7 @@ int main(){
     };
     toolbar * toolb = new toolbar("Terminal IDE");
     
-    int focussed = 0;
+    int focussed = 1;
 
     frames[focussed]->content = "Code\nEditor\n";
     frames[focussed]->putstr(frames[focussed]->content);

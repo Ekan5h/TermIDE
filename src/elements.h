@@ -166,6 +166,33 @@ class ioFrame{
     }
 
     void curup(){
+        int temp = pointer, pos = cursor%(width-2);
+        while(cursor%(width-2)!=0){
+            cursor-=1;
+            pointer-=1;
+        }
+        if(pointer!=0){
+            // Previous line available
+            pointer-=2;
+            cursor -= width-2;
+            int len = 0;
+            while(pointer>=0 && content[pointer]!='\n'){
+                pointer--;
+                len++;
+            }
+            pointer++;
+            pointer += len/(width-2)*(width-2);
+            temp = pointer;
+            while(pointer-temp<pos && content[pointer]!='\n'){
+                pointer++;
+                cursor++;
+            }
+            focus();
+        }else{
+            // Previous line not available
+            cursor += pos;
+            pointer = temp;
+        }
     }
 
     void curleft(){
@@ -176,7 +203,7 @@ class ioFrame{
             while(pointer>=0 && content[--pointer]!='\n');
             int temp = pointer;
             while(content[++pointer]!='\n'){
-                if(pointer - temp == width-2){
+                if((pointer-temp)%(width-2)==0 && (pointer-temp)/(width-2)>0){
                     cursor -= width-2;
                 }
                 cursor++;
