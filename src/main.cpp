@@ -26,11 +26,10 @@ int main(){
     };
     toolbar * toolb = new toolbar("Terminal IDE");
     
-    int focussed = 1;
-
-    frames[focussed]->content = "Code\nEditor\n";
-    frames[focussed]->putstr(frames[focussed]->content);
-    frames[focussed]->focus();
+    int focussed = 0;
+    for(int i = 0; i<10000; i++)
+    frames[focussed]->content += "Code\nEditor\n";
+    frames[focussed]->setPage();
 
     int ch;
     while((ch=getch())!=KEY_F(1)){

@@ -58,26 +58,27 @@ class ioFrame{
         move(c.second, c.first);
     }
 
-    string getPage(){
-        int charinline = 0;
-        int lines = 0;
-        string output = "";
-        for(int i = topline; i<content.length(); i++){  
-            char c = content[i];
-            if(c == '\n'){
-                lines++;
-                charinline = 0;
-            }else{
-                charinline++;
-                if(charinline == width-2){
-                    lines++;
-                    charinline = 0;
-                }
-            }
-            output = output + c;
-            if(lines == height-2) return output;
+    void scrollIntoView(){
+        if(cursor>=(height-2)*(width-2)){
+            int temp = topline;
+            while(content[++topline]!='\n' && topline-temp != width-2);
+            if(content[topline]=='\n') topline++;
+            setPage();
+            cursor-=width-2;
+            focus();
+        }else if(cursor<0){
+            // Scroll Up
         }
-        return output;
+    }
+
+    void setPage(){
+        int temp = cursor;
+        cursor = 0;
+        focus();
+        cleartillend();
+        putstr(content.substr(topline, content.length()));
+        cursor = temp;
+        focus();
     }
 
     void cleartillend(){
@@ -163,6 +164,7 @@ class ioFrame{
             // Next line not available
             pointer = temp;
         }
+        scrollIntoView();
     }
 
     void curup(){
@@ -193,6 +195,7 @@ class ioFrame{
             cursor += pos;
             pointer = temp;
         }
+        scrollIntoView();
     }
 
     void curleft(){
@@ -212,6 +215,7 @@ class ioFrame{
             cursor-=1;
         }
         focus();
+        scrollIntoView();
     }
 
     void curright(){
@@ -223,6 +227,7 @@ class ioFrame{
         }
         pointer+=1;
         focus();
+        scrollIntoView();
     }
 
 };
