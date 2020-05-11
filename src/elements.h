@@ -67,7 +67,14 @@ class ioFrame{
             cursor-=width-2;
             focus();
         }else if(cursor<0){
-            // Scroll Up
+            int temp = --topline;
+            topline--;
+            while(topline >=0 && content[topline]!='\n') topline--;
+            topline++;
+            topline += ((temp-topline)/(width-2))*(width-2);
+            setPage();
+            cursor+=width-2;
+            focus();
         }
     }
 
@@ -103,6 +110,7 @@ class ioFrame{
         else{
             cursor+= width-2 - cursor%(width-2);
         }
+        scrollIntoView();
         focus();
     }
 
@@ -117,7 +125,7 @@ class ioFrame{
             while(pointer>=0 && content[--pointer]!='\n');
             int prev = pointer;
             while(++pointer!=temp){
-                if(pointer - prev == width-2){
+                if((pointer - prev)%(width-2)==0){
                     cursor -= width-2;
                 }
                 cursor++;
@@ -125,6 +133,7 @@ class ioFrame{
         }else
             cursor--;
         setcursor();
+        scrollIntoView();
         cleartillend();
         putstr(content.substr(pointer,content.length()));
         focus();
