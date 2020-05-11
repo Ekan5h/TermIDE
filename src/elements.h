@@ -39,13 +39,6 @@ class ioFrame{
         wmove(win, r, c);
     }
 
-    void setcursor(int newc){
-        cursor = newc;
-        int r = 1 + cursor/(width-2);
-        int c = 1 + cursor%(width-2);
-        wmove(win, r, c);
-    }
-
     pair<int, int> getcursor(){
         int r = 1 + cursor/(width-2);
         int c = 1 + cursor%(width-2);
