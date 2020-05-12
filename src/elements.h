@@ -54,8 +54,8 @@ class ioFrame{
     void scrollIntoView(){
         if(cursor>=(height-2)*(width-2)){
             int temp = topline;
-            while(content[++topline]!='\n' && topline-temp != width-2);
-            if(content[topline]=='\n') topline++;
+            while(content[topline]!='\n' && topline-temp != width-2) topline++;
+            if(content[topline]=='\n' && topline-temp != width-2) topline++;
             setPage();
             cursor-=width-2;
             focus();
@@ -94,6 +94,7 @@ class ioFrame{
     }
 
     void typechr(char c){
+        if(c=='\r') c = '\n';
         content = content.substr(0,pointer) + c + content.substr(pointer,content.length());
         cleartillend();
         putstr(content.substr(pointer,content.length()));
