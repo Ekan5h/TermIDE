@@ -133,6 +133,13 @@ class ioFrame{
         focus();
     }
 
+    void deleteChar(){
+        if(pointer < content.length()){
+            curright();
+            untypechr();
+        }
+    }
+
     void putstr(string s){
         int temp = cursor;
         for(char c:s){
@@ -229,6 +236,31 @@ class ioFrame{
             cursor+=1;
         }
         pointer+=1;
+        focus();
+        scrollIntoView();
+    }
+
+    void nextWord(){
+        curright();
+        while(pointer<content.length() && content[pointer]!='\n' && content[pointer]!=' '){
+            pointer++;
+            cursor++;
+        }
+        focus();
+        scrollIntoView();
+    }
+
+    void prevWord(){
+        curleft();
+        if(content[pointer]=='\n') return ;
+        while(pointer>0 && content[pointer]!='\n' && content[pointer]!=' '){
+            pointer--;
+            cursor--;
+        }
+        if(content[pointer]=='\n'){
+            pointer++;
+            cursor++;
+        }
         focus();
         scrollIntoView();
     }

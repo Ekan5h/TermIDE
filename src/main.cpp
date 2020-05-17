@@ -32,6 +32,7 @@ int main(){
 
     int ch;
     while((ch=getch())!=KEY_F(1)){
+        // cout<<ch<<endl;
         switch (ch){
         case KEY_DOWN:
             frames[focussed]->curdown();
@@ -49,6 +50,15 @@ int main(){
         case '\b':
         case KEY_BACKSPACE:
             frames[focussed]->untypechr();
+            break;
+        case 330:
+            frames[focussed]->deleteChar();
+            break;
+        case 561:
+            frames[focussed]->nextWord();
+            break;
+        case 546:
+            frames[focussed]->prevWord();
             break;
         default:
             frames[focussed]->typechr(ch);
